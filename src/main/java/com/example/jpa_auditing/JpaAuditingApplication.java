@@ -1,23 +1,14 @@
 package com.example.jpa_auditing;
 
-import com.example.jpa_auditing.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-public class JpaAuditingApplication implements CommandLineRunner {
-
-    @Autowired
-    private UserService userService;
+@EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
+public class JpaAuditingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaAuditingApplication.class, args);
 	}
-
-    @Override
-    public void run(String... args) throws Exception {
-        userService.createMockUsers();
-    }
 }

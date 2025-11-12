@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class UserService {
@@ -14,7 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public void createMockUsers(){
+    public List<User> createMockUsers(){
         User user1 = new User(null,"vinicius@gmail.com","Vinicius");
         User user2 = new User(null,"joaozinho@gmail.com","Joaozinho");
         User user3 = new User(null,"mariazinha@gmail.com","Mariazinha");
@@ -22,11 +21,6 @@ public class UserService {
         User user5 = new User(null,"messi@gmail.com","Messi");
         User user6 = new User(null,"cr7@gmail.com","Cr7");
 
-        repository.saveAll(List.of(user1,user2,user3,user4,user5,user6));
-    }
-
-    public User findRandomUser() {
-        List<User> users = repository.findAll();
-        return users.get(new Random().nextInt(users.size()));
+        return repository.saveAll(List.of(user1,user2,user3,user4,user5,user6));
     }
 }

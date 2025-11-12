@@ -1,10 +1,16 @@
 package com.example.jpa_auditing.domain;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class) //Ativa o listener que cuida dos campos de auditoria
 public class Product {
 
     @Id
@@ -14,23 +20,27 @@ public class Product {
     private String name;
     private Double price;
     private String description;
+
+    @CreatedBy // Preenchido automaticamente com o nome de quem criou o registro
     private String createdBy;
+
+    @LastModifiedBy// Atualizado automaticamente quando o registro é alterado
     private String updatedBy;
+
+    @CreatedDate// Data e hora da criação
     private LocalDateTime createdAt;
+
+    @LastModifiedDate// Data e hora da última modificação
     private LocalDateTime updatedAt;
 
     public Product() {
     }
 
-    public Product(Long id, String name, Double price, String description, String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(Long id, String name, Double price, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.createdBy = createdBy;
-        this.updatedBy = updatedBy;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -69,31 +79,15 @@ public class Product {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public String getUpdatedBy() {
         return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
